@@ -1,0 +1,36 @@
+# GitHub Actions: main に push されたら Cloudflare Workers へ自動デプロイする。
+# 手元での `npm run deploy` を、GitHub が肩代わりして実行してくれる。
+
+name: Deploy to Cloudflare Workers
+
+# いつ動かすか
+on:
+  push:
+    branches:
+      - main # main への push だけをトリガーにする
+  workflow_dispatch: # GitHub の画面から手動でも実行できるようにする
+
+# このワークフローに与える権限は最小限に。
+# ソースを読むだけなので contents: read のみ。
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # GitHub が用意する使い捨ての Linux マシンで動く
+    steps:
+      # 1. リポジトリの中身をそのマシンに取り出す
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. wrangler deploy を実行する。
+      #    アセット(フォント/アイコン/アバター)は public/ に
+      #    コミット済みなので、ここで取得し直す必要はない。
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v4
+        with:
+          # GitHub の Repository secrets に登録した2つを渡す。
+          # 値そのものはログに出ない(GitHub が自動でマスクする)。
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
