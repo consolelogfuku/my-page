@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // 公開URL: https://<name>.jkyuwaflh.workers.dev
+  "name": "my-page",
+
+  // Workers ランタイムの挙動を固定する日付。基本は作成時のまま触らない
+  "compatibility_date": "2026-08-16",
+
+  // 静的アセット配信。main（Workerスクリプト）は不要。
+  // assets.directory だけを書くと Cloudflare がアセット専用 Worker を用意する
+  "assets": {
+    "directory": "./public",
+
+    // 存在しないパスへのアクセス時は /404.html を返す
+    "not_found_handling": "404-page"
+  },
+
+  // ダッシュボードでログを見られるようにする
+  "observability": {
+    "enabled": true
+  }
+}

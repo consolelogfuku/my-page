@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#1b6b45"/>
+  <!-- 葉のかたち: Tabler Icons "leaf" (MIT) を 24x24 から 2倍に拡大 -->
+  <g transform="translate(8 8) scale(2)" fill="none" stroke="#f4f7f4"
+     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 21c.5 -4.5 2.5 -8 7 -10"/>
+    <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3l.014 0"/>
+  </g>
+</svg>

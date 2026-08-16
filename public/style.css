@@ -1,0 +1,419 @@
+/* =========================================================
+   fukumasa sugawa / profile page
+   DESIGN_VARIANCE 6 - MOTION_INTENSITY 5 - VISUAL_DENSITY 4
+   ---------------------------------------------------------
+   - 角丸は 14px の 1 種類に固定（アバターのみ 20px の大きめ同系）
+   - アクセントカラーは burnt orange 1色のみ
+   - ライト / ダークはページ全体で 1 テーマ。セクションごとの反転はしない
+   ========================================================= */
+
+/* ---------- font (self-hosted) ---------- */
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- tokens ---------- */
+:root {
+  --bg: #f4f7f4;
+  --surface: #ffffff;
+  --border: #dfe6e0;
+  --border-strong: #c6d3c8;
+  --text: #16201a;
+  --text-muted: #67766c;
+  --accent: #1b6b45;
+  /* 木漏れ日をイメージした、ページ上部のごく淡い緑のにじみ */
+  --wash: rgba(27, 107, 69, 0.07);
+  /* ホバー中のリンクに当たる光 */
+  --spot: rgba(27, 107, 69, 0.13);
+  --border-hover: rgba(27, 107, 69, 0.4);
+  --glow: 0 12px 30px rgba(27, 107, 69, 0.18);
+  --shadow: 0 1px 2px rgba(22, 32, 26, 0.04);
+
+  --radius: 14px;
+  --radius-lg: 20px;
+
+  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "Noto Sans JP", "Yu Gothic UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d120f;
+    --surface: #141a16;
+    --surface-hover: #19211c;
+    --border: #232d27;
+    --border-strong: #35423a;
+    --text: #e9efe9;
+    --text-muted: #8b978e;
+    --accent: #5fcf94;
+    --wash: rgba(95, 207, 148, 0.07);
+    --spot: rgba(95, 207, 148, 0.15);
+    --border-hover: rgba(95, 207, 148, 0.38);
+    --glow: 0 0 0 1px rgba(95, 207, 148, 0.1), 0 14px 34px rgba(0, 0, 0, 0.55);
+    --shadow: none;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: radial-gradient(120% 60% at 50% 0%, var(--wash), transparent 70%)
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* =========================================================
+   レイアウト
+   モバイル: 1カラム / デスクトップ: 5fr 6fr の非対称グリッド
+   ========================================================= */
+.page {
+  position: relative;
+  z-index: 1; /* 葉のレイヤー(.leaves)より前面に置く */
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 56px 20px 72px;
+}
+
+@media (min-width: 900px) {
+  .page {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: 0 88px;
+    padding: 96px 40px 96px;
+    /* align-items は既定の stretch のまま。
+       左右のカラムが同じ高さになることが、下の .links--fill の前提になる */
+  }
+
+  /* フッターは2カラムの下に回して全幅にする。
+     右カラムの中に残すと、リンク一覧の下端がフッターのぶんだけ
+     持ち上がってしまい、左カラムと揃わなくなる */
+  .foot {
+    grid-column: 1 / -1;
+    margin-top: 56px;
+  }
+}
+
+/* ---------- 左カラム: アイデンティティ ---------- */
+.identity { margin: 0 0 48px; }
+
+@media (min-width: 900px) {
+  .identity { margin: 0; }
+}
+
+.avatar {
+  display: block;
+  width: 112px;
+  height: 112px;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.name {
+  margin: 28px 0 0;
+  font-size: clamp(2.25rem, 1.5rem + 3vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+/* 名前の末尾に添える葉。文字サイズに追従させたいので em で指定する */
+.leaf {
+  display: inline-block;
+  width: 0.42em;
+  height: 0.42em;
+  margin-left: 0.24em;
+  vertical-align: 0.04em;
+  color: var(--accent);
+}
+
+.handle {
+  margin: 12px 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+}
+
+.bio {
+  margin: 20px 0 0;
+  max-width: 34em;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+}
+
+/* ---------- 趣味 / 資格 ---------- */
+.facts {
+  margin: 22px 0 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 18px;
+  font-size: 0.875rem;
+  max-width: 34em;
+}
+
+.facts dt {
+  color: var(--accent);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.facts dd {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+/* ---------- 右カラム: リンク ---------- */
+.links-heading {
+  margin: 0 0 18px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.link-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+/* ---------- 右カラムを左カラムの高さまで伸ばす ----------
+   .links--fill が付いた列だけが対象（404ページは対象外）。
+   各行を等分に引き伸ばすので、一番下の行の下端が
+   左カラムの最終行の下端とそろう。
+   数値で位置を合わせていないので、左カラムの文章が増減しても追従する。 */
+@media (min-width: 900px) {
+  .links--fill {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .links--fill .link-list {
+    flex: 1;
+    grid-auto-rows: minmax(50px, 1fr);
+  }
+
+  .links--fill .link-list > li { display: grid; }
+  .links--fill .link { height: 100%; }
+}
+
+.link {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* スポットライトの光。カーソル位置は JS が --mx / --my に入れる。
+   JS が動かない環境では中央上から当たった状態になる。 */
+.link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 0%),
+    var(--spot),
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--glow);
+  transform: translateY(-2px);
+}
+
+.link:hover::before { opacity: 1; }
+
+.link:active { transform: translateY(1px); }
+
+.link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.link-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.link-title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.link-note {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ---------- アイコン（Simple Icons / Tabler を mask で単色化） ---------- */
+.icon,
+.arrow {
+  display: block;
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: var(--text);
+  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link:hover .icon { color: var(--accent); }
+
+.i-hatena { mask-image: url("/icons/hatena.svg"); -webkit-mask-image: url("/icons/hatena.svg"); }
+.i-qiita  { mask-image: url("/icons/qiita.svg");  -webkit-mask-image: url("/icons/qiita.svg"); }
+.i-zenn   { mask-image: url("/icons/zenn.svg");   -webkit-mask-image: url("/icons/zenn.svg"); }
+.i-github { mask-image: url("/icons/github.svg"); -webkit-mask-image: url("/icons/github.svg"); }
+.i-x      { mask-image: url("/icons/x.svg");      -webkit-mask-image: url("/icons/x.svg"); }
+
+.arrow {
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  mask-image: url("/icons/arrow-up-right.svg");
+  -webkit-mask-image: url("/icons/arrow-up-right.svg");
+  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link:hover .arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
+}
+
+/* =========================================================
+   舞い落ちる葉
+   ---------------------------------------------------------
+   position: fixed + pointer-events: none の固定レイヤーに閉じ込める。
+   スクロールするコンテナの中で animation を回すと、
+   スクロールのたびに再描画が走ってモバイルのFPSが落ちるため。
+   動かすのは transform と opacity だけ（GPUで完結する）。
+   ========================================================= */
+.leaves {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.leaves span {
+  position: absolute;
+  top: -6vh;
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  /* 落下 */
+  animation: leaf-drop var(--dur) linear var(--delay) infinite;
+}
+
+.leaves span::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: var(--accent);
+  opacity: 0.3;
+  mask: url("/icons/leaf.svg") center / contain no-repeat;
+  -webkit-mask: url("/icons/leaf.svg") center / contain no-repeat;
+  /* 左右の揺れと回転。落下とは別周期にすることで
+     8枚が同じ動きに見えないようにしている */
+  animation: leaf-sway var(--sway) ease-in-out var(--delay) infinite alternate;
+}
+
+@keyframes leaf-drop {
+  from { transform: translateY(0); }
+  to   { transform: translateY(112vh); }
+}
+
+@keyframes leaf-sway {
+  from { transform: translateX(-16px) rotate(-30deg); }
+  to   { transform: translateX(16px) rotate(40deg); }
+}
+
+/* ---------- フッター ---------- */
+.foot {
+  margin-top: 40px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.foot p { margin: 0; }
+
+/* =========================================================
+   モーション（MOTION_INTENSITY 5）
+   読み込み時に上から順に立ち上がるカスケードのみ。
+   目的はヒエラルキーの提示。prefers-reduced-motion では無効化。
+   ========================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .identity,
+  .links-heading,
+  .link-list > li,
+  .foot {
+    animation: rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  .links-heading { animation-delay: 0.08s; }
+  .link-list > li { animation-delay: calc(0.14s + var(--i) * 0.06s); }
+  .foot { animation-delay: 0.5s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+
+  /* animation を止めるだけだと葉が画面上に貼りついたままになるので、
+     まるごと非表示にする */
+  .leaves { display: none; }
+}

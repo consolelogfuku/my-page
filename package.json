@@ -1,0 +1,14 @@
+{
+  "name": "my-page",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Workers で配信する自己紹介ページ",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "assets": "bash scripts/fetch-assets.sh"
+  },
+  "devDependencies": {
+    "wrangler": "^4.123.0"
+  }
+}
