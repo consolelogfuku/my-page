@@ -16,6 +16,20 @@
     "not_found_handling": "404-page"
   },
 
+  // 独自ドメイン。custom_domain: true にすると
+  // DNSレコードの作成とSSL証明書の発行を Cloudflare が自動でやる。
+  // ゾーンが同じアカウントにあることが条件。
+  "routes": [
+    {
+      "pattern": "suagawa.dev",
+      "custom_domain": true
+    }
+  ],
+
+  // workers.dev のURLも残す（既定は true だが、意図を明示しておく）。
+  // 独自ドメインだけにするなら false
+  "workers_dev": true,
+
   // ダッシュボードでログを見られるようにする
   "observability": {
     "enabled": true
