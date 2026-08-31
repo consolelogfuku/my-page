@@ -311,6 +311,7 @@ body {
 .i-qiita  { mask-image: url("/icons/qiita.svg");  -webkit-mask-image: url("/icons/qiita.svg"); }
 .i-zenn   { mask-image: url("/icons/zenn.svg");   -webkit-mask-image: url("/icons/zenn.svg"); }
 .i-github { mask-image: url("/icons/github.svg"); -webkit-mask-image: url("/icons/github.svg"); }
+.i-speakerdeck { mask-image: url("/icons/speakerdeck.svg"); -webkit-mask-image: url("/icons/speakerdeck.svg"); }
 .i-x      { mask-image: url("/icons/x.svg");      -webkit-mask-image: url("/icons/x.svg"); }
 
 .arrow {

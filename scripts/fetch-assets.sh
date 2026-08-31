@@ -16,6 +16,7 @@ curl -fsSL -o public/icons/hatena.svg https://cdn.simpleicons.org/hatenabookmark
 curl -fsSL -o public/icons/qiita.svg  https://cdn.simpleicons.org/qiita/000000
 curl -fsSL -o public/icons/zenn.svg   https://cdn.simpleicons.org/zenn/000000
 curl -fsSL -o public/icons/github.svg https://cdn.simpleicons.org/github/000000
+curl -fsSL -o public/icons/speakerdeck.svg https://cdn.simpleicons.org/speakerdeck/000000
 curl -fsSL -o public/icons/x.svg      https://cdn.simpleicons.org/x/000000
 
 # --- UIアイコン: Tabler Icons (MIT) ---
