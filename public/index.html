@@ -32,33 +32,6 @@
   </head>
 
   <body>
-    <div class="leaves" aria-hidden="true">
-      <span
-        style="--x: 6vw; --size: 15px; --dur: 21s; --sway: 6s; --delay: -3s"
-      ></span>
-      <span
-        style="--x: 18vw; --size: 11px; --dur: 27s; --sway: 8s; --delay: -14s"
-      ></span>
-      <span
-        style="--x: 31vw; --size: 18px; --dur: 18s; --sway: 5s; --delay: -8s"
-      ></span>
-      <span
-        style="--x: 44vw; --size: 12px; --dur: 30s; --sway: 9s; --delay: -21s"
-      ></span>
-      <span
-        style="--x: 57vw; --size: 16px; --dur: 23s; --sway: 7s; --delay: -5s"
-      ></span>
-      <span
-        style="--x: 69vw; --size: 10px; --dur: 33s; --sway: 10s; --delay: -17s"
-      ></span>
-      <span
-        style="--x: 81vw; --size: 17px; --dur: 20s; --sway: 6s; --delay: -11s"
-      ></span>
-      <span
-        style="--x: 92vw; --size: 13px; --dur: 26s; --sway: 8s; --delay: -1s"
-      ></span>
-    </div>
-
     <div class="page">
       <header class="identity">
         <img
@@ -71,27 +44,9 @@
           decoding="async"
         />
         <h1 class="name">
-          Fukumasa<br />Sugawa<!-- 葉のかたち: Tabler Icons "leaf" (MIT)
-          --><svg
-            class="leaf"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M5 21c.5 -4.5 2.5 -8 7 -10" />
-            <path
-              d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3l.014 0"
-            />
-          </svg>
+          Fukumasa<br />Sugawa
         </h1>
-        <p class="handle">@consolelogfuku</p>
-        <p class="bio">
-          ソフトウェアエンジニア。Ruby on Rails を中心に開発しています。
-        </p>
+        <p class="bio">ソフトウェアエンジニア。</p>
 
         <dl class="facts">
           <dt>趣味</dt>
@@ -102,10 +57,8 @@
       </header>
 
       <main class="links links--fill">
-        <h2 class="links-heading">作っているところ、書いているところ</h2>
-
         <ul class="link-list">
-          <li style="--i: 0">
+          <li>
             <a
               class="link"
               href="https://github.com/consolelogfuku"
@@ -120,7 +73,7 @@
             </a>
           </li>
 
-          <li style="--i: 1">
+          <li>
             <a
               class="link"
               href="https://consolelogfuku.hatenablog.com/"
@@ -135,7 +88,7 @@
             </a>
           </li>
 
-          <li style="--i: 2">
+          <li>
             <a
               class="link"
               href="https://qiita.com/fuku122"
@@ -150,7 +103,7 @@
             </a>
           </li>
 
-          <li style="--i: 3">
+          <li>
             <a
               class="link"
               href="https://zenn.dev/fukuuuuuu"
@@ -165,7 +118,7 @@
             </a>
           </li>
 
-          <li style="--i: 4">
+          <li>
             <a
               class="link"
               href="https://speakerdeck.com/sugawa_fuku"
@@ -180,7 +133,7 @@
             </a>
           </li>
 
-          <li style="--i: 5">
+          <li>
             <a
               class="link"
               href="https://x.com/consolelogfuku"
@@ -202,19 +155,5 @@
       </footer>
     </div>
 
-    <script>
-      // ホバー中のリンクにカーソル位置を渡す。
-      // CSS 変数を書き換えるだけで、レイアウトも再描画も発生しない。
-      // リスナーは一覧に1つだけ（各行に付けない）。
-      document
-        .querySelector(".link-list")
-        ?.addEventListener("pointermove", (event) => {
-          const link = event.target.closest(".link");
-          if (!link) return;
-          const box = link.getBoundingClientRect();
-          link.style.setProperty("--mx", `${event.clientX - box.left}px`);
-          link.style.setProperty("--my", `${event.clientY - box.top}px`);
-        });
-    </script>
   </body>
 </html>

@@ -1,9 +1,9 @@
 /* =========================================================
    fukumasa sugawa / profile page
-   DESIGN_VARIANCE 6 - MOTION_INTENSITY 5 - VISUAL_DENSITY 4
+   DESIGN_VARIANCE 3 - MOTION_INTENSITY 1 - VISUAL_DENSITY 4
    ---------------------------------------------------------
-   - 角丸は 14px の 1 種類に固定（アバターのみ 20px の大きめ同系）
-   - アクセントカラーは burnt orange 1色のみ
+   - 角丸・影・装飾的な背景を使わない
+   - UIの色は白と黒だけ。プロフィール写真は元のカラー
    - ライト / ダークはページ全体で 1 テーマ。セクションごとの反転はしない
    ========================================================= */
 
@@ -18,23 +18,12 @@
 
 /* ---------- tokens ---------- */
 :root {
-  --bg: #f4f7f4;
+  --bg: #ffffff;
   --surface: #ffffff;
-  --border: #dfe6e0;
-  --border-strong: #c6d3c8;
-  --text: #16201a;
-  --text-muted: #67766c;
-  --accent: #1b6b45;
-  /* 木漏れ日をイメージした、ページ上部のごく淡い緑のにじみ */
-  --wash: rgba(27, 107, 69, 0.07);
-  /* ホバー中のリンクに当たる光 */
-  --spot: rgba(27, 107, 69, 0.13);
-  --border-hover: rgba(27, 107, 69, 0.4);
-  --glow: 0 12px 30px rgba(27, 107, 69, 0.18);
-  --shadow: 0 1px 2px rgba(22, 32, 26, 0.04);
-
-  --radius: 14px;
-  --radius-lg: 20px;
+  --border: #000000;
+  --text: #000000;
+  --text-muted: #000000;
+  --accent: #000000;
 
   --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Hiragino Sans",
     "Noto Sans JP", "Yu Gothic UI", sans-serif;
@@ -43,19 +32,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0d120f;
-    --surface: #141a16;
-    --surface-hover: #19211c;
-    --border: #232d27;
-    --border-strong: #35423a;
-    --text: #e9efe9;
-    --text-muted: #8b978e;
-    --accent: #5fcf94;
-    --wash: rgba(95, 207, 148, 0.07);
-    --spot: rgba(95, 207, 148, 0.15);
-    --border-hover: rgba(95, 207, 148, 0.38);
-    --glow: 0 0 0 1px rgba(95, 207, 148, 0.1), 0 14px 34px rgba(0, 0, 0, 0.55);
-    --shadow: none;
+    --bg: #000000;
+    --surface: #000000;
+    --border: #ffffff;
+    --text: #ffffff;
+    --text-muted: #ffffff;
+    --accent: #ffffff;
   }
 }
 
@@ -66,9 +48,7 @@ html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   min-height: 100dvh;
-  background: radial-gradient(120% 60% at 50% 0%, var(--wash), transparent 70%)
-    var(--bg);
-  background-attachment: fixed;
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 16px;
@@ -83,7 +63,6 @@ body {
    ========================================================= */
 .page {
   position: relative;
-  z-index: 1; /* 葉のレイヤー(.leaves)より前面に置く */
   max-width: 1060px;
   margin: 0 auto;
   padding: 56px 20px 72px;
@@ -119,7 +98,7 @@ body {
   display: block;
   width: 112px;
   height: 112px;
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   object-fit: cover;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -133,16 +112,6 @@ body {
   line-height: 1.04;
 }
 
-/* 名前の末尾に添える葉。文字サイズに追従させたいので em で指定する */
-.leaf {
-  display: inline-block;
-  width: 0.42em;
-  height: 0.42em;
-  margin-left: 0.24em;
-  vertical-align: 0.04em;
-  color: var(--accent);
-}
-
 .handle {
   margin: 12px 0 0;
   font-family: var(--font-mono);
@@ -152,7 +121,7 @@ body {
 }
 
 .bio {
-  margin: 20px 0 0;
+  margin: 18px 0 0;
   max-width: 34em;
   font-size: 0.9375rem;
   color: var(--text-muted);
@@ -179,20 +148,12 @@ body {
   color: var(--text-muted);
 }
 
-/* ---------- 右カラム: リンク ---------- */
-.links-heading {
-  margin: 0 0 18px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
 .link-list {
   margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 10px;
+  gap: 0;
 }
 
 /* ---------- 右カラムを左カラムの高さまで伸ばす ----------
@@ -217,50 +178,25 @@ body {
 
 .link {
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 16px;
-  padding: 15px 18px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  padding: 18px 16px;
+  border: 0;
+  border-top: 1px solid var(--border);
   background: var(--surface);
-  box-shadow: var(--shadow);
   color: inherit;
   text-decoration: none;
-  transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.12s linear, color 0.12s linear;
 }
 
-/* スポットライトの光。カーソル位置は JS が --mx / --my に入れる。
-   JS が動かない環境では中央上から当たった状態になる。 */
-.link::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(
-    240px circle at var(--mx, 50%) var(--my, 0%),
-    var(--spot),
-    transparent 68%
-  );
-  opacity: 0;
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
+.link-list > li:last-child .link { border-bottom: 1px solid var(--border); }
 
 .link:hover {
-  border-color: var(--border-hover);
-  box-shadow: var(--glow);
-  transform: translateY(-2px);
+  background: var(--text);
+  color: var(--bg);
 }
-
-.link:hover::before { opacity: 1; }
-
-.link:active { transform: translateY(1px); }
 
 .link:focus-visible {
   outline: 2px solid var(--accent);
@@ -282,7 +218,7 @@ body {
 .link-note {
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: var(--text-muted);
+  color: currentColor;
 }
 
 /* ---------- アイコン（Simple Icons / Tabler を mask で単色化） ---------- */
@@ -301,11 +237,8 @@ body {
 .icon {
   width: 20px;
   height: 20px;
-  color: var(--text);
-  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: currentColor;
 }
-
-.link:hover .icon { color: var(--accent); }
 
 .i-hatena { mask-image: url("/icons/hatena.svg"); -webkit-mask-image: url("/icons/hatena.svg"); }
 .i-qiita  { mask-image: url("/icons/qiita.svg");  -webkit-mask-image: url("/icons/qiita.svg"); }
@@ -317,66 +250,14 @@ body {
 .arrow {
   width: 16px;
   height: 16px;
-  color: var(--text-muted);
+  color: currentColor;
   mask-image: url("/icons/arrow-up-right.svg");
   -webkit-mask-image: url("/icons/arrow-up-right.svg");
-  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.18s ease;
 }
 
 .link:hover .arrow {
-  color: var(--accent);
   transform: translate(2px, -2px);
-}
-
-/* =========================================================
-   舞い落ちる葉
-   ---------------------------------------------------------
-   position: fixed + pointer-events: none の固定レイヤーに閉じ込める。
-   スクロールするコンテナの中で animation を回すと、
-   スクロールのたびに再描画が走ってモバイルのFPSが落ちるため。
-   動かすのは transform と opacity だけ（GPUで完結する）。
-   ========================================================= */
-.leaves {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.leaves span {
-  position: absolute;
-  top: -6vh;
-  left: var(--x);
-  width: var(--size);
-  height: var(--size);
-  /* 落下 */
-  animation: leaf-drop var(--dur) linear var(--delay) infinite;
-}
-
-.leaves span::before {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-color: var(--accent);
-  opacity: 0.3;
-  mask: url("/icons/leaf.svg") center / contain no-repeat;
-  -webkit-mask: url("/icons/leaf.svg") center / contain no-repeat;
-  /* 左右の揺れと回転。落下とは別周期にすることで
-     8枚が同じ動きに見えないようにしている */
-  animation: leaf-sway var(--sway) ease-in-out var(--delay) infinite alternate;
-}
-
-@keyframes leaf-drop {
-  from { transform: translateY(0); }
-  to   { transform: translateY(112vh); }
-}
-
-@keyframes leaf-sway {
-  from { transform: translateX(-16px) rotate(-30deg); }
-  to   { transform: translateX(16px) rotate(40deg); }
 }
 
 /* ---------- フッター ---------- */
@@ -388,33 +269,6 @@ body {
 
 .foot p { margin: 0; }
 
-/* =========================================================
-   モーション（MOTION_INTENSITY 5）
-   読み込み時に上から順に立ち上がるカスケードのみ。
-   目的はヒエラルキーの提示。prefers-reduced-motion では無効化。
-   ========================================================= */
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: none; }
-  }
-
-  .identity,
-  .links-heading,
-  .link-list > li,
-  .foot {
-    animation: rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  }
-
-  .links-heading { animation-delay: 0.08s; }
-  .link-list > li { animation-delay: calc(0.14s + var(--i) * 0.06s); }
-  .foot { animation-delay: 0.5s; }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; animation: none !important; }
-
-  /* animation を止めるだけだと葉が画面上に貼りついたままになるので、
-     まるごと非表示にする */
-  .leaves { display: none; }
+  * { transition: none !important; }
 }
